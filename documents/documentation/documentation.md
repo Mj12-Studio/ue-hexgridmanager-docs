@@ -26,19 +26,19 @@
 
 ## Setup ##
 
-* Place the **BP_HexGridManager** Actor into your scene/level from the Content Drawer,
+* Place the **BP_HexGrid** Actor into your scene/level from the Content Drawer,
   just like any other asset.
 
 ![setup_basic_1](./images/setup_basic_1.png "All> Content> Plugins> GridManagerBasic Content> Blueprints")
 
-* Select the HexGridManager Actor and find the **Hex Tile** & **Hex Grid** sections in the **Details** sidebar.
+* Select the HexGrid Actor and find the **Hex Tile** & **Hex Grid** sections in the **Details** sidebar.
   Set Grid and Tile Options. Optionally, click the **Spawn Tiles** button to spawn
   the grid in the editor.
 
 ![setup_basic_2](./images/setup_basic_2.png "Details> Hex Tile & Hex Grid")
 
-* Open the Level Blueprint (with the HexGridManager selected) and place the **Spawn Tiles**
-  Blueprint function node. ("Call Function on *BP Hex Grid Manager > Hex Grid > Spawn Tiles*")
+* Open the Level Blueprint (with the HexGrid selected) and place the **Spawn Tiles**
+  Blueprint function node. ("Call Function on *BP Hex Grid > Hex Grid > Spawn Tiles*")
   and connect it to the Event BeginPlay node.
 
 ![setup_basic_3](./images/setup_basic_3.png "Level Blueprint> Event Graph")
@@ -55,8 +55,8 @@
 
 ### Subscribing to Events ###
 
-* From the Level Blueprint (when the HexGridManager is selected on the level editor), Right-click and then select
-  "Add Event for BP Hex Grid Manager > Hex Grid > Add On Tile Clicked"
+* From the Level Blueprint (when the HexGrid is selected on the level editor), Right-click and then select
+  "Add Event for BP Hex Grid > Hex Grid > Add On Tile Clicked"
 
 ![setup_event_1](./images/setup_event_1.png "Level Blueprint> Event Graph")
 
@@ -68,8 +68,8 @@
 
 ### Select Which Tile To Spawn ###
 
-* On the Level Blueprint, create a reference to the HexGridManager (with the HexGridManager selected on the level editor, right-click the graph and select "*Create a Reference to BP_HexGridManager*").
-* Drag the pin from HexGridManager and create node, "*Variables > HexTile > Set Tile Selector*":
+* On the Level Blueprint, create a reference to the HexGrid (with the HexGrid selected on the level editor, right-click the graph and select "*Create a Reference to BP_HexGrid*").
+* Drag the pin from HexGrid and create node, "*Variables > HexGrid > Set Tile Selector*":
 
 ![setup_delegate_1](./images/setup_delegate_1.png "Event Graph> Variables> Hex Tile> Set Tile Selector")
 
@@ -94,13 +94,13 @@ In the above example, we're setting the Tile Class arbitrarily, based on the Hex
 
 Unless you plan on populating your game with pink tiles, you're going to have to create your own, custom, HexTile class(es). This is easy to do, and can be a useful part of your game logic, if you choose.
 
-* Navigate to *All> Plugins> GridManagerBasic C++ Classes> GridManager> Public*, right-click on the HexTile C++ class, and select "Create Blueprint class based on HexTile".
+* Navigate to *All> Plugins> GridManagerBasic C++ Classes> HexGridManager> Public*, right-click on the HexTile C++ class, and select "Create Blueprint class based on HexTile".
 
-![hexTile_customClass1](./images/hextile_customclass1.png "All> Plugins> GridManagerBasic C++ Classes> GridManager> Public")
+![hexTile_customClass1](./images/hextile_customclass1.png "All> Plugins> GridManagerBasic C++ Classes> HexGridManager> Public")
 
-* Name the Blueprint and save it to *All> Content> Blueprints*. Open/Edit the new Blueprint, select *Tile Mesh* in the Components toolbar, then find "*Details> Static Mesh> Static Mesh*", and select your mesh.
+* Name the Blueprint and save it to *All> Content> Blueprints*. Open/Edit the new Blueprint, select *Tile Mesh* in the Components toolbar, then find "*Class Defaults> Details> Static Mesh> Static Mesh*", and select your mesh.
 
-![hexTile_customClass3](./images/hextile_customclass3.png "Details> Static Mesh> Static Mesh")
+![hexTile_customClass3](./images/hextile_customclass3.png "Class Defaults> Details> Static Mesh> Static Mesh")
 
 * Assign a Material and Compile/Save the Blueprint.
 
@@ -110,19 +110,19 @@ Unless you plan on populating your game with pink tiles, you're going to have to
 
 ### HexTile Properties ###
 
-Two sets of properties can be found in "*Details> Hex Tile*", *Transform Delta*, and *Event*. The *Enable* toggles in **Event** tell HexGridManager whether to bind events to these tiles (which happens during the call to *PlaceTile*).
+Two sets of properties can be found in "*Class Defaults> Details> Hex Tile*", *Transform Delta*, and *Event*. The *Enable* toggles in **Event** tell HexGrid whether to bind events to these tiles (which happens during the call to *PlaceTile*).
 
-![hexTile_customClass5](./images/hextile_customclass5.png "Details> Hex Tile")
+![hexTile_customClass5](./images/hextile_customclass5.png "Class Defaults> Details> Hex Tile")
 
 **Transform Delta** provides class-specific adjustments to tile placement that can be helpful in the case of mixing tile classes. For example, since TileMesh "depth" (Y) drives calculations on placement, these differently sized tiles have wildly incongruent placements:
 
 ![hexTile_customClass6](./images/hextile_customclass6.png "Poor, tiny cactus statues")
 
-By adjusting the *Transform Delta* to compensate for the differences,
+By adjusting the *Transform Delta* to compensate for the differences...
 
 ![hexTile_customClass7](./images/hextile_customclass7.png "Cactus SMAAAASH!!")
 
-we can make adjustments to the tile:
+...we can make adjustments to the tiles.
 
 ![hexTile_customClass8](./images/hextile_customclass8.png "Maybe we can eat them?")
 
@@ -162,36 +162,45 @@ This Blueprint shows how *GetNeighbors* C++ function works behind-the-scenes: it
 
 ### Coordinates (HexCube) ###
 
-The [HexCube](#hexcube) structure is used to communicate and store hexagon tile coordinates with 3 integers: Q, R, & S. The sum of these values must be zero. TileOrientation is also stored, as it is required for conversions and calculations. HexGridManager uses these coordinates as identifiers, and are required parameters in functions such as [SpawnTile](#spawntile), [GetTile](#gettile), & [DestroyTile](#destroytile).
+The [HexCube](#hexcube) structure is used to communicate and store hexagon tile coordinates with 3 integers: Q, R, & S. The sum of these values must be zero. TileOrientation is also stored, as it is required for conversions and calculations. HexGrid uses these coordinates as identifiers, and are required parameters in functions such as [SpawnTile](#spawntile), [GetTile](#gettile), & [DestroyTile](#destroytile).
 
 ![structure_hexCube](./images/structure_hexcube.png "Structure: HexCube")
 
 ### HexOffset Coordinates ###
 
-The [HexOffset](#hexoffset) structure is used to communicate tile coordinates with 2 integers: X & Y. These correlate roughly with rows and columns and are easier to understand than HexCube coordinates. TileOrientation is also stored, as it is required for conversions and calculations. HexGridManager can convert offset coordinates to cube coordinates and vice versa.
+The [HexOffset](#hexoffset) structure is used to communicate tile coordinates with 2 integers: X & Y. These correlate roughly with rows and columns and are easier to understand than HexCube coordinates. TileOrientation is also stored, as it is required for conversions and calculations. HexTile can convert offset coordinates to cube coordinates and vice versa.
 
 ![structure_hexOffset](./images/structure_hexoffset.png "Structure: HexCube")
 
 ### HexagonDimensions ###
 
-The [HexagonDimensions](#hexagondimensions) structure carries information about the properties of the tile mesh and grid settings. HexGridManager needs these values along with some hidden, calculated values to perform integral operations.
+The [HexagonDimensions](#hexagondimensions) structure carries information about the properties of the tile mesh and grid settings. HexGrid needs these values along with some hidden, calculated values to perform integral operations.
 
 ![structure_hexagonDimensions](./images/structure_hexagondimensions.png "Structure: HexCube")
 
 ### HexTile Blueprint Function Library ###
 
 Included with the HexTile C++ library is a Blueprint Function Library containing 2 conversion functions that will be available on any Blueprint.
+
 ![conversionFunctions](./images/blueprintlibrary_conversionfunctions.png "Structure: HexCube")
 
 HexTile also has a convenience function, *GetOffset* that is available from HexTile nodes.
+
+![conversionFunctions](./images/blueprintlibrary_getoffset.png "Structure: HexCube")
+
+And *GetDistance* can calculate the distance, in tiles, of any two tile coordinates.
+
+![conversionFunctions](./images/blueprintlibrary_getdistance.png "Structure: HexCube")
 
 &nbsp;
 
 ## Functions ##
 
-All functions are available on Blueprints from a BP_HexGridManager instance reference.
+All functions are available on Blueprints from a BP_HexGrid instance reference.
 
-[CalculateTileLocation](#calculatetilelocation), [CalculateLocalTileLocation](#calculatelocaltilelocation), [DestroyTile](#destroytile), [DestroyTiles](#destroytiles), [GetNeighbors](#getneighbors), [GetNeighborsAtDistance](#getneighborsatdistance), [GetNeighborTiles](#getneighbortiles), [GetNeighborTilesAtDistance](#getneighbortilesatdistance), [GetTile](#gettile), [GetTiles](#gettiles), [GetTileMeshDimensions](#gettilemeshdimensions), [PlaceTile](#placetile), [SetDefaultTileClass](#setdefaulttileclass), [SetGridShape](#setgridshape), [SetHexagonDistance](#sethexagondistance), [SetRectangleDimensions](#setrectangledimensions), [SetTileOrientation](#settileorientation), [SetTileSpacing](#settilespacing), [SetTileScale](#settilescale), [SpawnTile](#spawntile), [SpawnTiles](#spawntiles), & [TileExists](#tileexists)
+[CalculateTileLocation](#calculatetilelocation), [CalculateLocalTileLocation](#calculatelocaltilelocation), [DestroyTile](#destroytile), [DestroyTiles](#destroytiles), [GetNeighbors](#getneighbors), [GetNeighborsAtDistance](#getneighborsatdistance), [GetNeighborTiles](#getneighbortiles), [GetNeighborTilesAtDistance](#getneighbortilesatdistance), [GetTile](#gettile), [GetTiles](#gettiles), [GetTileMeshDimensions](#gettilemeshdimensions), [PlaceTile](#placetile), [RevertTilesMaterial](#reverttilesmaterial), [SetDefaultTileClass](#setdefaulttileclass), [SetGridShape](#setgridshape), [SetHexagonDistance](#sethexagondistance), [SetRectangleDimensions](#setrectangledimensions), [SetTileOrientation](#settileorientation), [SetTileSpacing](#settilespacing), [SetTilesMaterial](#settilesmaterial), [SetTileScale](#settilescale), [SpawnTile](#spawntile), [SpawnTiles](#spawntiles), & [TileExists](#tileexists)
+
+\* Please note that some screenshots show "BP_HexGridManager1" as the target node name. This is same as "BP_HexGrid". \*
 
 &nbsp;
 
@@ -212,7 +221,7 @@ Get the calculated world location of a specific tile. This function is used to d
 **Returns**\
  &nbsp; &nbsp; [*Vector*](#vector) - World position vector (x,y,z).\
 &nbsp;\
-Location is calculated on the assumption that the grid manager rotation is (0, 0, 0). Z is taken from grid manager. If you need a tile position from a rotated grid, it is better to get the tile (GetTile) and get then the position through the usual Blueprint means. We will update this function in a future release to handle grid rotation.
+Location is calculated on the assumption that the grid rotation is (0, 0, 0). Z is taken from grid. If you need a tile position from a rotated grid, it is better to get the tile (GetTile) and get then the position through the usual Blueprint means. We will update this function in a future release to handle grid rotation.
 
 &nbsp;
 
@@ -222,7 +231,7 @@ Location is calculated on the assumption that the grid manager rotation is (0, 0
 
 ![CalculateLocalTileLocation](./images/blueprint_calculatelocaltilelocation.png "CalculateLocalTileLocation Blueprint node")
 
-Get the location of a specific tile relative to the Grid Manager.
+Get the location of a specific tile relative to the Grid.
 
 >[*Vector*](#vector) &nbsp; **CalculateLocalTileLocation** &nbsp; ([HexCube](#hexcube) `Coordinates`, [HexagonDimensions](#hexagondimensions) `Dimensions`);
 
@@ -296,7 +305,7 @@ Get List of neighboring tile coordinates at a specific distance.
  &nbsp; &nbsp; `Distance` &nbsp; [Int](#int "get tile coordinates at exactly this distance") &nbsp; - &nbsp; Get coordinates of tiles at this distance from center tile.
 
 **Returns**\
- &nbsp; &nbsp; Array\<[HexCube](#hexcube)\> - List of neighboring tiles.
+ &nbsp; &nbsp; Array\<[HexCube](#hexcube)\> - List of neighboring tile coordinates.
 
 &nbsp;
 
@@ -398,12 +407,24 @@ Get size dimensions of TileMesh associated with a HexTile derivative class.
 
 ![PlaceTile](./images/blueprint_placetile.png "PlaceTile Blueprint node")
 
-Place a single tile into the HexGridManager grid. Utilizing the grid configuration, this function analyzes the properties of the tile instance, sets its' scale, rotation, & translation, binds the tile to the HexGridManager's event handlers, attaches the tile to the HexGridManager's Actor, and stores the tile in HexGridManager's internal matrix.
+Place a single tile onto the HexGrid. Utilizing the grid configuration, this function analyzes the properties of the tile instance, sets its' scale, rotation, & translation, binds the tile to the HexGrid's event handlers, attaches the tile to the HexGrid Actor, and stores the tile in HexGrid's internal matrix.
 
 >[*void*](#void) &nbsp; **PlaceTile** &nbsp; ([*HexTile*](#hextile) `Tile`);
 
 **Parameters**\
- &nbsp; &nbsp; `Tile` &nbsp; [*HexTile*](#hextile "HexTile class reference") &nbsp; - &nbsp; HexTile instance to place in the HexGridManager grid.
+ &nbsp; &nbsp; `Tile` &nbsp; [*HexTile*](#hextile "HexTile class reference") &nbsp; - &nbsp; HexTile instance to place on the HexGrid.
+
+&nbsp;
+
+### RevertTilesMaterial ###
+
+---
+
+![RevertTilesMaterial](./images/blueprint_reverttilesmaterial.png "RevertTilesMaterial Blueprint node")
+
+Revert the Material for all existing tiles to the assigned, default material.
+
+>[*void*](#void) &nbsp; **RevertTilesMaterial** &nbsp; ();
 
 &nbsp;
 
@@ -413,13 +434,13 @@ Place a single tile into the HexGridManager grid. Utilizing the grid configurati
 
 ![SetDefaultTileClass](./images/blueprint_setdefaulttileclass.png "SetDefaultTileClass Blueprint node")
 
-Set the default HexTile Class that HexGridManager will use to spawn tile instances from.\
+Set the default HexTile Class that HexGrid will use to spawn tile instances from.\
 It should be a Blueprint inheriting from HexTile (BP_HexTile is an example and it is included with the plugin).
 
 >[*void*](#void) &nbsp; **SetDefaultTileClass** &nbsp; ([HexTileClassReference](#hextileclassreference) `Tile Class`);
 
 **Parameters**\
- &nbsp; &nbsp; `Tile Class` &nbsp; [HexTileClassReference](#hextileclassreference "A HexTile-derived class that HexGridManager will spawn tile from") &nbsp; - &nbsp; A HexTile-derived class that HexGridManager will spawn tile from.
+ &nbsp; &nbsp; `Tile Class` &nbsp; [HexTileClassReference](#hextileclassreference "A HexTile-derived class that HexGrid will spawn tile from") &nbsp; - &nbsp; A HexTile-derived class that HexGrid will spawn tile from.
 
 &nbsp;
 
@@ -444,7 +465,7 @@ Set the shape of the tile grid. Rectangle or Hexagon.
 
 ![SetHexagonDistance](./images/blueprint_sethexagondistance.png "SetHexagonDistance Blueprint node")
 
-Set the size of the hexagon grid by tiles from center. HexGridManager will use this value when spawning tiles if **GridShape** is set to *Hexagon*.
+Set the size of the hexagon grid by tiles from center. HexGrid will use this value when spawning tiles if **GridShape** is set to *Hexagon*.
 
 >[*void*](#void) &nbsp; **SetHexagonDistance** &nbsp; ([Int](#int) `Distance`);
 
@@ -459,7 +480,7 @@ Set the size of the hexagon grid by tiles from center. HexGridManager will use t
 
 ![SetRectangleDimensions](./images/blueprint_setrectangledimensions.png "SetRectangleDimensions Blueprint node")
 
-Set the size of the grid in tiles by columns and rows. HexGridManager will use these values when spawning tiles if **GridShape** is set to *Rectangle*.
+Set the size of the grid in tiles by columns and rows. HexGrid will use these values when spawning tiles if **GridShape** is set to *Rectangle*.
 
 >[*void*](#void) &nbsp; **SetRectangleDimensions** &nbsp; ([IntPoint](#intpoint) `Dimensions`);
 
@@ -498,6 +519,21 @@ Set the scale for all tiles. - If you need to scale some tile classes differentl
 
 &nbsp;
 
+### SetTilesMaterial ###
+
+---
+
+![SetTilesMaterial](./images/blueprint_settilesmaterial.png "SetTilesMaterial Blueprint node")
+
+Set the Material for all existing tiles.
+
+>[*void*](#void) &nbsp; **SetTilesMaterial** &nbsp; ([MaterialInterface](#materialinterface) `Material`);
+
+**Parameters**\
+ &nbsp; &nbsp; `Material` &nbsp; [MaterialInterface](#materialinterface "Material or Material Instance to apply to tiles") &nbsp; - &nbsp; Material or Material Instance to apply to tiles.
+
+&nbsp;
+
 ### SetTileSpacing ###
 
 ---
@@ -519,13 +555,13 @@ Set the width of the space between the tiles.
 
 ![SpawnTile](./images/blueprint_spawntile.png "SpawnTile Blueprint node")
 
-Create and place a single tile in accordance with the HexGridManager configuration. If 'None' is specified for *TileClass*, then *[Select Tile Class Delegate](#select-which-tile-to-spawn)* will be used and by default, the *DefaultTileClass* is used.
+Create and place a single tile in accordance with the HexGrid configuration. If 'None' is specified for *TileClass*, then *[Select Tile Class Delegate](#select-which-tile-to-spawn)* will be used and by default, the *DefaultTileClass* is used.
 
 >[*HexTile*](#hextile) &nbsp; **SpawnTile** &nbsp; ([HexCube](#hexcube) `Coordinates`, [HexTileClassReference](#hextileclassreference) `TileClass`);
 
 **Parameters**\
  &nbsp; &nbsp; `Coordinates` &nbsp; [HexCube](#hexcube "HexCube Coordinates") &nbsp; - &nbsp; Hexagon coordinates indicating where to place spawned tile.\
- &nbsp; &nbsp; `TileClass` &nbsp; [HexTileClassReference](#hextileclassreference "A HexTile-derived class that HexGridManager will spawn tile from") &nbsp; - &nbsp; A HexTile-derived class that the tile will spawn from.
+ &nbsp; &nbsp; `TileClass` &nbsp; [HexTileClassReference](#hextileclassreference "A HexTile-derived class that HexGrid will spawn tile from") &nbsp; - &nbsp; A HexTile-derived class that the tile will spawn from.
 
 **Returns**\
  &nbsp; &nbsp; [*HexTile*](#hextile) - Instance reference to newly spawned tile.
@@ -538,7 +574,7 @@ Create and place a single tile in accordance with the HexGridManager configurati
 
 ![SpawnTiles](./images/blueprint_spawntiles.png "SpawnTiles Blueprint node")
 
-Create and place tiles according to the HexGridManager configuration. This will remove all existing tiles and generate a rectangle or hexagon grid from the default tile class or the tile selection delegate.
+Create and place tiles according to the HexGrid configuration. This will remove all existing tiles and generate a rectangle or hexagon grid from the default tile class or the tile selection delegate.
 
 >[*void*](#void) &nbsp; **SpawnTiles** &nbsp; ();
 
@@ -571,7 +607,7 @@ Check if a tile exists at hex coordinates.
 ![TileSelector](./images/blueprint_delegate_tileselector.png "TileSelector Blueprint setup")
 ![TileSelector](./images/blueprint_delegate_tileselector2.png "TileSelector Blueprint setup")
 
-Set the Blueprint function that HexGridManager will use to determine which HexTile Class to spawn tiles from. This function will be called before each tile is spawned. The HexTile Class returned by the function will be used to spawn the tile.
+Set the Blueprint function that HexGrid will use to determine which HexTile Class to spawn tiles from. This function will be called before each tile is spawned. The HexTile Class returned by the function will be used to spawn the tile.
 
 >[HexTileClassReference](#hextileclassreference) &nbsp; **TileSelector** &nbsp; ([HexCube](#hexcube) `Coordinates`);
 
@@ -737,7 +773,7 @@ Event fires when a tile's Collision Box stops intersecting with another Actor's 
 ### Actor ###
 
 *This is an important UnrealEngine class that is typically used for many objects in a scene.\
-HexGrid Manager inherits from Actor.*
+HexGrid inherits from Actor.*
 
 ### Bool ###
 
@@ -768,11 +804,11 @@ It also holds the TileOrientation, which is needed for conversion to [HexCube](#
 
 ### HexTile ###
 
-*Base class for objects that HexGridManager can use to tile its' grid.*
+*Base class for objects that HexGrid can use to tile its' grid.*
 
 ### HexTileClassReference ###
 
-*A reference to a HexTile-derived class, (TSubclassOf\<AHexTile\>). HexGridManager needs this to spawn tile instances from.*
+*A reference to a HexTile-derived class, (TSubclassOf\<AHexTile\>). HexGrid needs this to spawn tile instances from.*
 
 ### Int ###
 
@@ -809,7 +845,6 @@ translations, rotations, and scales in a three-dimensional space.*
 
 ## Support ##
 
-* **Documentation:** Available [here](./documents/documentation/documentation.md).
-* **Tutorials:** Learn the basics with these [tutorials](./documents/tutorials/README.md).
+* **Tutorials:** Learn the basics with these [tutorials](../tutorials/README.md).
 * **Videos:** Coming soon on [YouTube](https://www.youtube.com/@Mj12Studio).
 * **Discord:** Join our community on [Discord](https://discord.gg/2SsKNeHY3u).

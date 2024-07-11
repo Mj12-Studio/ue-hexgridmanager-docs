@@ -1,6 +1,6 @@
 # Hex>Grid Manager #
 
-<img src="./images/Mj12_Logo_white_bg.png" align="right" alt="Mj12 Studio" width="192" height="192">
+<img src="./Images/Mj12_Logo_white_bg.png" align="right" alt="Mj12 Studio" width="192" height="192">
 
 Hex>Grid Manager is an Unreal Engine Plugin that empowers developers to create interactive, customizable hexagon tile grids effortlessly. With fully functional classes, blueprints, and examples, this plugin provides a solution for implementing hexagon tile grids in your games.
 
@@ -21,21 +21,25 @@ Hex>Grid Manager is an Unreal Engine Plugin that empowers developers to create i
 
 &nbsp;
 
-![Grid In Action](./images/grid_in_action1.png "Hex>Grid Manager")
+![Grid In Action](./Images/grid_in_action1.png "Hex>Grid Manager")
 
 &nbsp;
 
 ## Included w/ Plugin ##
 
-* **Classes:** 2 C++ classes - HexGridManager & HexTile.
-* **Blueprints:** 2 Blueprints - BP_HexGridManager & BP_HexTile.
+* **Classes:** 2 C++ classes - HexGrid & HexTile.
+* **Blueprints:** 2 Blueprints - BP_HexGrid & BP_HexTile.
 * **Shapes:** 2 shapes - Rectangle & Hexagon.
 * **Structures:** 4 structures.
 * **Assets:** 1 static mesh, 1 basic material, and 1 demo level.
-* **Functions:** 22 functions.
+* **Functions:** 28 functions.
 * **Events:** 10 events.
 * **Delegate:** 1 delegate.
 * **Documentation:** Comprehensive documentation [here](./documents/documentation/documentation.md).
+
+&nbsp;
+
+![Grid In Action](./Images/grid_in_action2.png "Hex>Grid Manager")
 
 &nbsp;
 
@@ -48,4 +52,4 @@ Hex>Grid Manager is an Unreal Engine Plugin that empowers developers to create i
 
 &nbsp;
 
-Hex>Grid Manager is designed to make your development process smoother and more efficient. Whether you're building a strategy game, a simulation, or any other type of game that benefits from hexagon tile grids, Hex>Grid Manager provides the tools you need.
+Hex>Grid Manager is designed to make your development process smoother and more efficient. Whether you're building a strategy game, a simulation, or any other type of game that benefits from basic hexagon tile grids, Hex>Grid Manager provides the tools you need.

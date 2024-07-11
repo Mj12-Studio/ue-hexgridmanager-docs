@@ -2,6 +2,8 @@
 
 This tutorial will guide you through creating a simple demonstration of Hex>Grid Manager's features. By the end of this tutorial, you should have an understanding of how to utilize this plugin in your own projects.
 
+\* Some of the screenshots will show the "BP_HexGrid" actor with the name "BP_HexGridManager". These are the same reference. \*
+
 ## Table of Contents ##
 
 [Hex>Grid Manager Tutorial](#hexgrid-manager-tutorial)
@@ -35,20 +37,15 @@ Create a new, **basic level** (File > New Level):\
 
 &nbsp;
 
-### Place GridManager in Level ###
+### Place HexGrid in Level ###
 
-From the **Content Drawer**, navigate to "*All > Plugins > GridManagerBasic Content > Blueprints*", then drag **BP_HexGridManager**:\
-![Add GridManager](./images/tutorial_03_add_gridmanager.png "ToolTip_Message")
-
-&nbsp;
-
-and drop it into the new level:\
-![Continue Adding GridManager](./images/tutorial_04_add_gridmanager2.png "ToolTip_Message")
+From the **Content Drawer**, navigate to "*All > Plugins > GridManagerBasic Content > Blueprints*", then drag **BP_HexGrid**:\
+![Add HexGrid](./images/tutorial_03_add_gridmanager.png "ToolTip_Message")
 
 &nbsp;
 
-Configure the Hex>GridManager instance by selecting it and setting the *Details > Hex Grid* options:\
-![Configure GridManager](./images/tutorial_05_configure_gridmanager.png "ToolTip_Message")
+drop it into the new level, and configure the HexGrid instance by selecting it and setting the *Details > Hex Grid* options:\
+![Configure HexGrid](./images/tutorial_05_configure_gridmanager.png "ToolTip_Message")
 
 &nbsp;
 
@@ -64,7 +61,7 @@ To spawn the tiles in-game, we need to call the [Spawn Tiles](../../documentatio
 
 &nbsp;
 
-Right-click on the *Event Graph*, and select, "*Call Function on BP Hex Grid Manager > Hex Grid > Spawn Tiles*":\
+Right-click on the *Event Graph*, and select, "*Call Function on BP Hex Grid > Hex Grid > Spawn Tiles*":\
 ![Place SpawnTiles Node](./images/tutorial_08_place_spawntiles_node.png "ToolTip_Message")
 
 &nbsp;
@@ -96,7 +93,7 @@ Let's build a demo that uses all of these events.
 
 ### Mouse Events ###
 
-From the *Level Blueprint Event Graph*, with the **BP_HexGridManager** selected on the Level editor, create the *OnTileClicked* Event node by right-clicking the Event Graph and selecting "*Add Event for BP Hex Grid Manager > Event Dispatchers > Add On Tile Clicked*":\
+From the *Level Blueprint Event Graph*, with the **BP_HexGrid** selected on the Level editor, create the *OnTileClicked* Event node by right-clicking the Event Graph and selecting "*Add Event for BP Hex Grid > Event Dispatchers > Add On Tile Clicked*":\
 ![Image_Title](./images/tutorial_20_add_onclicked_node.png "ToolTip_Message")
 
 Drag the "Touched Tile" pin out to create a new node, search for "set material", and select "Set Material (TileMesh)":\
@@ -129,7 +126,7 @@ Name this Macro, "Begin":\
 Set up the other three Macros:\
 ![Image_Title](./images/tutorial_28_setup_macros.png "ToolTip_Message")
 
-Now, Add all four **BP_HexGridManager** touch events to the Level Blueprint, and connect them to the macros you just created. Additional macro nodes can be placed on the Event Graph by dragging them from the Macros section of the *My Blueprint* side-bar.\
+Now, Add all four **BP_HexGrid** touch events to the Level Blueprint, and connect them to the macros you just created. Additional macro nodes can be placed on the Event Graph by dragging them from the Macros section of the *My Blueprint* side-bar.\
 ![Image_Title](./images/tutorial_29_add_touch_events.png "ToolTip_Message")
 
 &nbsp;
@@ -142,15 +139,14 @@ To test this on you PC, you can set the Project to [use the mouse for touch](../
 
 ## Use Overlap Events ##
 
-There are two overlap events available for use; Begin Overlap & End Overlap. In order for them to function, the project and actors involved will need to have a Collision Box and have overlap events enabled.
+There are two overlap events available for use; Begin Overlap & End Overlap. In order for them to function, overlap events must be enabled for the Actors in scene that you want to generate overlap events for.
 
 ### Add Collision Box ###
 
 Adding a collision box to an actor is simple. Edit the actor blueprint (Content Drawer, double-click, or right-click, edit) and open the "*Viewport*". On the *Components* tool-bar, select the RootComponent and then click the "Add" button. Type "Box" and then select, "*Box Collision*":\
 ![Image_Title](./images/tutorial_33_add_boxcollision.png "ToolTip_Message")
 
-Use the *Viewport* to adjust the *Box Collision* appropriately for the expected use. You may want to set 'Visible' to false on the Box Collision if you are spawning the actor in the level editor. Be sure to compile & save:\
-![Image_Title](./images/tutorial_34_adjust_boxcollision.png "ToolTip_Message")
+Use the *Viewport* to adjust the *Box Collision* appropriately for the expected use. You may want to set 'Visible' to false on the Box Collision if you are spawning the actor in the level editor. Be sure to compile & save.
 
 ### Add Sphere Actor ###
 
@@ -165,6 +161,8 @@ Subscribe to relevant mouse and touch events to keep the *IsBeingMovedByMouse* v
 
 Add the following nodes to the Event Graph, and then you should be able to drag the sphere around:\
 ![Image_Title](./images/tutorial_38_simple_move_to_mouse.png "ToolTip_Message")
+
+There's an improved version of the mouse-drag blueprint on the BP_Sphere Actor in the Example level.
 
 ### Overlap Events ###
 
@@ -181,9 +179,6 @@ The following Blueprints demonstrate features of the Hex>Grid Manager plugin. Al
 
 Function: Set Material for (an Array of) Tiles.\
 ![Image_Title](./images/tutorial_40_settilesmaterial.png "ToolTip_Message")
-
-Set Material for all Tiles.\
-![Image_Title](./images/tutorial_41_setalltilesmaterial.png "ToolTip_Message")
 
 Set Material for Neighbor Tiles.\
 ![Image_Title](./images/tutorial_43_setneighborsmaterial.png "ToolTip_Message")
