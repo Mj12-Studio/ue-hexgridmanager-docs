@@ -1,6 +1,6 @@
 # Hex>Grid Manager #
 
-<img src="./Images/Mj12_Logo_white_bg.png" align="right" alt="Mj12 Studio" width="192" height="192">
+<img src="./images/Mj12_Logo_white_bg.png" align="right" alt="Mj12 Studio" width="192" height="192">
 
 Hex>Grid Manager is an Unreal Engine Plugin that empowers developers to create interactive, customizable hexagon tile grids effortlessly. With fully functional classes, blueprints, and examples, this plugin provides a solution for implementing hexagon tile grids in your games.
 
@@ -21,7 +21,7 @@ Hex>Grid Manager is an Unreal Engine Plugin that empowers developers to create i
 
 &nbsp;
 
-![Grid In Action](./Images/grid_in_action1.png "Hex>Grid Manager")
+![Grid In Action](./images/grid_in_action1.png "Hex>Grid Manager")
 
 &nbsp;
 
@@ -39,7 +39,7 @@ Hex>Grid Manager is an Unreal Engine Plugin that empowers developers to create i
 
 &nbsp;
 
-![Grid In Action](./Images/grid_in_action2.png "Hex>Grid Manager")
+![Grid In Action](./images/grid_in_action2.png "Hex>Grid Manager")
 
 &nbsp;
 
