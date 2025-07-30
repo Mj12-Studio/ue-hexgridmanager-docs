@@ -46,6 +46,7 @@ From the **Content Drawer**, navigate to "*All > Plugins > GridManagerBasic Cont
 
 drop it into the new level, and configure the HexGrid instance by selecting it in the editor then **setting the following values and details** inside of *Details > Hex Grid* options:\
 ![Configure HexGrid](./images/tutorial_05_configure_gridmanager.png "ToolTip_Message")
+
 Be sure that inside of details > Hex Grid you have set Default Tile Class to **BP_HexTile** as failure to do so will result in a crash.
 
 Set **Hexagon Distance** value to **5** (For tutorial purposes you are advised against setting a high value)
