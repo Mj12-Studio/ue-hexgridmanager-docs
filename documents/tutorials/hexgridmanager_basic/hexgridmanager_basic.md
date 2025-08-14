@@ -44,12 +44,18 @@ From the **Content Drawer**, navigate to "*All > Plugins > GridManagerBasic Cont
 
 &nbsp;
 
-drop it into the new level, and configure the HexGrid instance by selecting it and setting the *Details > Hex Grid* options:\
+drop it into the new level, and configure the HexGrid instance by selecting it in the editor then **setting the following values and details** inside of *Details > Hex Grid* options:\
 ![Configure HexGrid](./images/tutorial_05_configure_gridmanager.png "ToolTip_Message")
+
+Be sure that inside of details > Hex Grid you have set Default Tile Class to **BP_HexTile** as failure to do so will result in a crash.
+
+Set **Hexagon Distance** value to **5** (For tutorial purposes you are advised against setting a high value)
 
 &nbsp;
 
-(Optionally, click the **Spawn Tiles** button to spawn editor-only tiles in the editor.)\
+
+
+(**Optionally**, click the **Spawn Tiles** button to spawn editor-only tiles in the editor.)\
 ![Spawn in Editor](./images/tutorial_06_spawn_in_editor.png "ToolTip_Message")
 
 &nbsp;
@@ -74,11 +80,19 @@ Then drag the execute pin from the *Event BeginPlay* node to the [Spawn Tiles](.
 Now, when you compile and play this level, a tile grid will spawn. Save the level:\
 ![Save Level](./images/tutorial_10_save_level.png "ToolTip_Message")
 
+(**Optional:** Play the level to see results)
+
+![Image_Title](./images/tutorial_11_prettygrid.png "ToolTip_Message")
+
+**How majestic!**
+
 &nbsp;
 
 ## Use Mouse/Touch Events ##
 
-**It is necessary to [Enable Mouse/Touch Events](../enable_mousetouch_events/enable_mousetouch_events.md) before any related Events will fire.**
+**NOTICE: MOUSE EVENTS WILL NOT FUNCTION IF YOU SKIP THIS SECTION**
+
+**It is necessary to follow these steps provided by this link [Enable Mouse/Touch Events](../enable_mousetouch_events/enable_mousetouch_events.md) before any related Events will fire.**
 
 There are four, independently-firing Mouse events, and the same is true for Touch events. With a little logic, events from both can be grouped into a common event lifecycle:
 
@@ -93,25 +107,25 @@ Let's build a demo that uses all of these events.
 
 ### Mouse Events ###
 
-From the *Level Blueprint Event Graph*, with the **BP_HexGrid** selected on the Level editor, create the *OnTileClicked* Event node by right-clicking the Event Graph and selecting "*Add Event for BP Hex Grid > Event Dispatchers > Add On Tile Clicked*":\
+From the *Level Blueprint Event Graph*, with the **BP_HexGrid** selected on the Level editor, create the *OnTileClicked* Event node by right-clicking the Event Graph and selecting "*Add Event for BP Hex Grid > Hex Grid > Add On Tile Clicked*":\
 ![Image_Title](./images/tutorial_20_add_onclicked_node.png "ToolTip_Message")
 
-Drag the "Touched Tile" pin out to create a new node, search for "set material", and select "Set Material (TileMesh)":\
+Drag the "Touched Tile" pin out to create a new node, search for "set material", and select "Set Material":\
 ![Image_Title](./images/tutorial_21_set_onclicked_node1.png "ToolTip_Message")
 
-Drag the execute pin from the "*On Tile Clicked*" Event node to the "*Set Material*" node, and set Material to *BasicAsset01*:\
+Drag the execute pin from the "*On Tile Clicked*" Event node to the "*Set Material*" node, and set Material to *M_ColorClick*:\
 ![Image_Title](./images/tutorial_22_set_onclicked_node2.png "ToolTip_Message")
 
-Repeat the same steps with *On Tile Begin Cursor Over*, (use *BasicShapeMaterial*):\
+Repeat the same steps with *On Tile Begin Cursor Over*, (use *M_ColorBegin*):\
 ![Image_Title](./images/tutorial_23_add_onbegincursorover_node.png "ToolTip_Message")
 
-And with *On Tile End Cursor Over* (use ArrowMaterial):\
+And with *On Tile End Cursor Over* (use M_ColorEnd):\
 ![Image_Title](./images/tutorial_24_add_onendcursorover_node.png "ToolTip_Message")
 
-And *On Tile Released* (BasicAsset03):\
+And *On Tile Released* (use M_ColorRelease):\
 ![Image_Title](./images/tutorial_25_add_onrelease_node.png "ToolTip_Message")
 
-If you Compile & Run the Level now, you should be able to see the events in action. You may find the default camera controls to be unhelpful for this testing. You can [set up a static camera](../static_camera/static_camera.md) to deal with this. More complicated examples are available in the Level Blueprint for the example Level included with this plugin. The specifics of when these events fire is explained in the [documentation](../../documentation/documentation.md#events).
+If you Compile & Run the Level now, you would be able to see the events in action, **however** if using the deafult camera controls you will find them to be unhelpful for this testing. You can [set up a static camera](../static_camera/static_camera.md) to deal with this. More complicated examples are available in the Level Blueprint for the example Level included with this plugin. The specifics of when these events fire is explained in the [documentation](../../documentation/documentation.md#events).
 
 &nbsp;
 
@@ -139,16 +153,17 @@ To test this on you PC, you can set the Project to [use the mouse for touch](../
 
 ## Use Overlap Events ##
 
-There are two overlap events available for use; Begin Overlap & End Overlap. In order for them to function, overlap events must be enabled for the Actors in scene that you want to generate overlap events for.
+
+There are two overlap events available for use; Begin Overlap & End Overlap. In order for them to function, overlap events must be enabled for the Actors (Actors you already have in your own project) in scene that you want to generate overlap events for. 
 
 ### Add Collision Box ###
 
-Adding a collision box to an actor is simple. Edit the actor blueprint (Content Drawer, double-click, or right-click, edit) and open the "*Viewport*". On the *Components* tool-bar, select the RootComponent and then click the "Add" button. Type "Box" and then select, "*Box Collision*":\
+Adding a collision box to an existing actor in a project is simple. Edit the actor blueprint (Content Drawer, double-click, or right-click, edit) and open the "*Viewport*". On the *Components* tool-bar, select the RootComponent and then click the "Add" button. Type "Box" and then select, "*Box Collision*":\
 ![Image_Title](./images/tutorial_33_add_boxcollision.png "ToolTip_Message")
 
 Use the *Viewport* to adjust the *Box Collision* appropriately for the expected use. You may want to set 'Visible' to false on the Box Collision if you are spawning the actor in the level editor. Be sure to compile & save.
 
-### Add Sphere Actor ###
+### Add Tutorial Sphere Actor ###
 
 To test overlap events, lets add another actor to the level. From the Content Drawer, in *All > Content > Blueprints*, create a new Blueprint (BP_Sphere) with Actor as the Parent Class, and then edit the new Blueprint. From the *Viewport*, add a *Sphere* and a *Box Collision* (be sure to compile & save):\
 ![Image_Title](./images/tutorial_35_create_sphere_actor.png "ToolTip_Message")
@@ -197,7 +212,7 @@ On the Level Blueprint Event Graph, combine all of the functions into a response
 
 ## Help ##
 
-* **Documentation:** Available [here](./documents/documentation/documentation.md).
+* **Documentation:** Available [here](../../documentation/documentation.md).
 * **Tutorials:** Learn the basics with these [tutorials](./documents/tutorials/README.md).
 * **Videos:** Coming soon on [YouTube](https://www.youtube.com/@Mj12Studio).
 * **Discord:** Join our community on [Discord](https://discord.gg/2SsKNeHY3u).

@@ -20,7 +20,7 @@ On the "Pick Parent Class" selector modal, under "All Classes", search for and s
 
 ## Create PlayerController ##
 
-Follow the same steps for creating the PlayerController as you did for creating the GameMode, but instead select the *PlayerController* Parent Class:\
+Follow the same steps for creating the PlayerController as you did for creating the GameMode, but instead select the *PlayerController* Parent Class, and name the new class, **BP_PlayerController**:\
 ![Create PlayerController Blueprint](./images/tutorial_13_create_playercontroller_blueprint.png "ToolTip_Message")
 
 &nbsp;
@@ -57,3 +57,5 @@ In World Settings, under the "Game Mode" section, set the "GameMode Override" to
 ![Set GameMode](./images/tutorial_18_set_gamemode.png "ToolTip_Message")
 
 You're done. The new GameMode/PlayerController settings are now your defaults.
+
+Return to the [tutorial](../hexgridmanager_basic/hexgridmanager_basic.md#use-mousetouch-events).

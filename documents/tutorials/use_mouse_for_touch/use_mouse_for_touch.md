@@ -1,4 +1,6 @@
-# Use Mouse To Simulate Touch #
+# Use Mouse To Simulate Touch (Screen) #
+
+This section will allow you to test the current functionality for touch screen devices.
 
 To test this on you PC, you can set the Project to use the mouse for touch. Do this by opening the *Project Settings*:\
 ![Image_Title](./images/tutorial_30_open_project_settings.png "ToolTip_Message")
@@ -12,3 +14,5 @@ find the "*Mouse Properties*" section, and set *Use Mouse for Touch* to true.
 You'll find that the behavior differs from that of the Mouse events- some events will fire simultaneously. To bring the two behaviors into alignment, we'll need to add some variables to our Level Blueprint, and modify the Begin, Enter, Leave, & End Macros. An example of this can be found in the Level Blueprint for the example Level included with this plugin.
 
 &nbsp;
+
+Return to the [tuorial](../hexgridmanager_basic/hexgridmanager_basic.md#use-overlap-events).
